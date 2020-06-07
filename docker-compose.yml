@@ -2,7 +2,7 @@ version: '3'
 services:
   # db:
   #   image: postgres:11.5-alpine
-  #   container_name: smzhack_db_1
+  #   container_name: art-photo_db_1
   #   ports:
   #     - '5432:5432'
   #   volumes:
@@ -17,15 +17,15 @@ services:
 
   backend:
     build: ./backend
-    container_name: smzhack_backend_1
+    container_name: art-photo_backend_1
     environment:
       - CONFIG_PATH=configure.ini
       - FLASK_APP=main.py
       # для отладки (при запуске в релиз убрать!)
       - FLASK_DEBUG=1
       - PYTHONUNBUFFERED=True     # Позволяет отслеживать процесс работы приложения в командной строке
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     volumes:
       - ./backend:/app/backend
     ports:

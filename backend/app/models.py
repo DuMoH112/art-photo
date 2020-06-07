@@ -3,6 +3,8 @@ import time
 import configparser
 
 from flask import jsonify
+from flask_wtf import Form
+from flask_wtf.file import FileField, FileRequired
 
 from database import Database
 
@@ -11,6 +13,17 @@ config = configparser.ConfigParser()
 
 def config_init(path):
     config.read(path)
+
+
+class MyForm(Form):
+    file_ = FileField('image', validators=[
+        FileRequired()
+    ])
+    path = None
+    success = None
+    orig = None
+    copy = None
+    time_seconds = None
 
 
 authorize = {}

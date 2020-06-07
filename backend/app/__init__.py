@@ -2,15 +2,11 @@ import os
 
 from flask import Flask
 from flask_wtf.csrf import CsrfProtect, CSRFError
-from flask_sslify import SSLify
-from flask_cors import CORS
 from app.router import routers, csrf_exempt
 from app.models import config_init, config
 
 app = Flask(__name__)
 csrf = CsrfProtect(app)
-sslify = SSLify(app)
-CORS(app)
 
 routers(app)
 csrf_exempt(csrf)

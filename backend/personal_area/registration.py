@@ -1,12 +1,10 @@
 import re
-import requests
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify
 from werkzeug.security import generate_password_hash
 from psycopg2 import sql
 
 from app.models import check_auth, authorize, config
-from pay import add_new_farmer_to_fns
 from database import Database
 
 registration_bp = Blueprint('registration', __name__)
@@ -50,19 +48,7 @@ def registration():
         result = execute_to_base(database, user)
 
         if result == True:
-            valid = add_new_farmer_to_fns(user['inn'])
-            if type(valid) == int:
-                valid = execute_id(database, valid, user['email'])
-            if valid != True:
-                vozvrat["messageError"] = valid
-                delete_user(database, user)
-            else:
-                valid = update_address(database, user)
-                if valid != True:
-                    vozvrat["messageError"] = valid
-                    delete_user(database, user)
-                else:
-                    vozvrat["messageSuccess"] = "Пользователь зарегестрирован"
+            vozvrat["messageSuccess"] = "Пользователь зарегестрирован"
         else:
             vozvrat["messageError"] = result
 
